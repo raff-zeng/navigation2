@@ -40,8 +40,8 @@ def generate_launch_description():
 
     # Getting directories and launch-files
     bringup_dir = get_package_share_directory('nav2_bringup')
-    slam_toolbox_dir = get_package_share_directory('slam_toolbox')
-    slam_launch_file = os.path.join(slam_toolbox_dir, 'launch', 'online_sync_launch.py')
+    # slam_toolbox_dir = get_package_share_directory('slam_toolbox')
+    # slam_launch_file = os.path.join(slam_toolbox_dir, 'launch', 'online_sync_launch.py')
 
     # Create our own temporary YAML files that include substitutions
     param_substitutions = {
@@ -110,16 +110,16 @@ def generate_launch_description():
     has_slam_toolbox_params = HasNodeParams(source_file=params_file,
                                             node_name='slam_toolbox')
 
-    start_slam_toolbox_cmd = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(slam_launch_file),
-        launch_arguments={'use_sim_time': use_sim_time}.items(),
-        condition=UnlessCondition(has_slam_toolbox_params))
+    # start_slam_toolbox_cmd = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(slam_launch_file),
+    #     launch_arguments={'use_sim_time': use_sim_time}.items(),
+    #     condition=UnlessCondition(has_slam_toolbox_params))
 
-    start_slam_toolbox_cmd_with_params = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(slam_launch_file),
-        launch_arguments={'use_sim_time': use_sim_time,
-                          'slam_params_file': params_file}.items(),
-        condition=IfCondition(has_slam_toolbox_params))
+    # start_slam_toolbox_cmd_with_params = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(slam_launch_file),
+    #     launch_arguments={'use_sim_time': use_sim_time,
+    #                       'slam_params_file': params_file}.items(),
+    #     condition=IfCondition(has_slam_toolbox_params))
 
     ld = LaunchDescription()
 
@@ -136,7 +136,7 @@ def generate_launch_description():
     ld.add_action(start_lifecycle_manager_cmd)
 
     # Running SLAM Toolbox (Only one of them will be run)
-    ld.add_action(start_slam_toolbox_cmd)
-    ld.add_action(start_slam_toolbox_cmd_with_params)
+    # ld.add_action(start_slam_toolbox_cmd)
+    # ld.add_action(start_slam_toolbox_cmd_with_params)
 
     return ld
